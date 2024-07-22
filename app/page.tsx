@@ -13,6 +13,15 @@ const HomePage = () => {
 
   const handleLogin = async () => {
     // Implement the logic to authenticate the user
+    try {
+      const response = await fakeLoginApi({ username, password });
+      localStorage.setItem('user', JSON.stringify({ username }));
+      localStorage.setItem('token', response.token);
+      dispatch(setUser({ username }));
+      dispatch(setToken(response.token));
+    } catch (error) {
+      console.error('Login failed', error);
+    }
   };
 
   return (
@@ -64,3 +73,13 @@ if (user) {
 };
 
 export default HomePage;
+
+try {
+  const response = await fakeLoginApi({ username, password });
+  localStorage.setItem('user', JSON.stringify({ username }));
+  localStorage.setItem('token', response.token);
+  dispatch(setUser({ username }));
+  dispatch(setToken(response.token));
+} catch (error) {
+  console.error('Login failed', error);
+}
